@@ -7,7 +7,7 @@ const server = restify.createServer({
 
 const logger = require('./basic-logger');
 
-const home = require('./routes/index');
+const gpsDataRoutes = require('./routes/gps_data');
 
 server.use(restify.plugins.throttle({
 	burst: 100,  	// Max 10 concurrent requests (if tokens)
@@ -19,12 +19,12 @@ server.use(restify.plugins.acceptParser(server.acceptable));
 server.use(restify.plugins.queryParser());
 server.use(restify.plugins.gzipResponse());
 
-router.add('/api', home);
+router.add('/', gpsDataRoutes);
 router.applyRoutes(server);
 
 server.on('after', restify.plugins.metrics({ server: server }, function onMetrics(err, metrics) {
 	logger.trace(`${metrics.method} ${metrics.path} ${metrics.statusCode} ${metrics.latency} ms`);
-}));
+}));	
 
 server.listen(8080, function () {
 	logger.info('%s listening at %s', server.name, server.url);
