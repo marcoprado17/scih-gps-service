@@ -4,10 +4,14 @@ const server = restify.createServer({
 	name: 'scih-gps-service',
 	version: '1.0.0',
 });
+const mongoose = require('mongoose');
+const mongoDbUri = "mongodb://root:UycjvlH5R54cJHfy44XGbvtXfGtXKweQ@35.224.88.88:27017/gps-data?authSource=admin"
+
+mongoose.connect(mongoDbUri, {});
 
 const logger = require('./basic-logger');
 
-const gpsDataRoutes = require('./routes/gps_data');
+const gpsDataRoutes = require('./resources/gps_data/routes');
 
 server.use(restify.plugins.throttle({
 	burst: 100,  	// Max 10 concurrent requests (if tokens)
@@ -19,7 +23,7 @@ server.use(restify.plugins.acceptParser(server.acceptable));
 server.use(restify.plugins.queryParser());
 server.use(restify.plugins.gzipResponse());
 
-router.add('/', gpsDataRoutes);
+router.add('/api/accounts/:accountId/contracts/:contractId/gps-data', gpsDataRoutes);
 router.applyRoutes(server);
 
 server.on('after', restify.plugins.metrics({ server: server }, function onMetrics(err, metrics) {
