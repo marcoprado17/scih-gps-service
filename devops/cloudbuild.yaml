@@ -5,26 +5,8 @@ steps:
   args: [
           'build',
           '--cache-from', 'gcr.io/$PROJECT_ID/gps-service:latest',
-          '-t', 'gcr.io/$PROJECT_ID/gps-service:$SHORT_SHA', 
-          '-f', 'devops/Dockerfile', 
-          '.'
-        ]
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-          'build',
-          '--cache-from', 'gcr.io/$PROJECT_ID/gps-service:latest',
           '-t', 'gcr.io/$PROJECT_ID/gps-service:latest', 
           '-f', 'devops/Dockerfile', 
           '.'
         ]
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/gps-service:$SHORT_SHA']
-- name: 'gcr.io/cloud-builders/kubectl'
-  args: [
-          'set', 'image', 'deployment/gps-service', 
-          'gps-service=gcr.io/smart-car-insurance-hybrid/gps-service:$SHORT_SHA'
-        ]
-  env:
-  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
-images: ['gcr.io/$PROJECT_ID/gps-service:latest', 'gcr.io/$PROJECT_ID/gps-service:$SHORT_SHA']
+images: ['gcr.io/$PROJECT_ID/gps-service:latest']
