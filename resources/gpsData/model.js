@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const timestamps = require('mongoose-timestamp');
 
-const GpsDataSchema = new mongoose.Schema({
+const GpsDataScheme = new mongoose.Schema({
     latitude: {
         type: Number,
         required: true,
@@ -18,8 +18,8 @@ const GpsDataSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-}, { collection: 'gps-data' })
+}, { collection: 'gpsData' })
 
-GpsDataSchema.plugin(timestamps)
+GpsDataScheme.plugin(timestamps)
 
-module.exports = exports = mongoose.model('GpsData', GpsDataSchema)
+module.exports = exports = mongoose.model('GpsData', GpsDataScheme)
