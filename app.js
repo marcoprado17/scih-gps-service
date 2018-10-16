@@ -5,7 +5,7 @@ const server = restify.createServer({
 	version: '1.0.0',
 });
 const mongoose = require('mongoose');
-const mongoDbUri = "mongodb://root:UycjvlH5R54cJHfy44XGbvtXfGtXKweQ@35.224.88.88:27017/gps-data?authSource=admin"
+const mongoDbUri = "mongodb://root:UycjvlH5R54cJHfy44XGbvtXfGtXKweQ@35.239.45.68:27017/gps-data?authSource=admin"
 
 mongoose.connect(mongoDbUri, {});
 
@@ -30,7 +30,7 @@ server.on('after', restify.plugins.metrics({ server: server }, function onMetric
 	logger.trace(`${metrics.method} ${metrics.path} ${metrics.statusCode} ${metrics.latency} ms`);
 }));	
 
-server.listen(8080, function () {
+server.listen(8282, function () {
 	logger.info('%s listening at %s', server.name, server.url);
 });
 
