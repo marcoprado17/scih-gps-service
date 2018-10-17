@@ -24,9 +24,9 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-	console.log(req.params);
+	// console.log(req.params);
 	let data = Object.assign({}, { accountId: req.params.accountId, contractId: req.params.contractId }, req.body) || {}
-	console.log(data);
+	// console.log(data);
 
 	GpsDataSchema
 		.create(data)

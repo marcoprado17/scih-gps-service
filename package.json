@@ -8,7 +8,8 @@
 		"boilerplate"
 	],
 	"scripts": {
-		"start": "node app.js"
+		"dev": "nodemon app.js --NODE_ENV=dev",
+    	"prod": "node app.js --NODE_ENV=prod"
 	},
 	"devDependencies": {
 		"eslint": "^4.16.0"
