@@ -7,9 +7,16 @@ const server = restify.createServer({
 const mongoose = require('mongoose');
 const mongoDbUri = "mongodb://root:UycjvlH5R54cJHfy44XGbvtXfGtXKweQ@35.239.45.68:27017/gps-data?authSource=admin"
 
-mongoose.connect(mongoDbUri, {});
-
-const logger = require('./basic-logger');
+const connectWithRetry = () => {
+	console.log('MongoDB connection with retry')
+	mongoose.connect(mongoDbUri, {}).then(()=>{
+		console.log('MongoDB is connected')
+	}).catch(err=>{
+		console.log('MongoDB connection unsuccessful, retry after 5 seconds.')
+		setTimeout(connectWithRetry, 5000)
+	});
+}
+connectWithRetry();
 
 const gpsDataRoutes = require('./resources/gpsData/routes');
 
@@ -27,13 +34,13 @@ router.add('/api/accounts/:accountId/contracts/:contractId/gps-data', gpsDataRou
 router.applyRoutes(server);
 
 server.on('after', restify.plugins.metrics({ server: server }, function onMetrics(err, metrics) {
-	logger.trace(`${metrics.method} ${metrics.path} ${metrics.statusCode} ${metrics.latency} ms`);
+	console.info(`${metrics.method} ${metrics.path} ${metrics.statusCode} ${metrics.latency} ms`);
 }));	
 
 server.listen(8282, function () {
-	logger.info('%s listening at %s', server.name, server.url);
+	console.info('%s listening at %s', server.name, server.url);
 });
 
 server.on('uncaughtException', function (req, res, route, err) {
-	logger.error(err);
+	console.error(err);
 });
