@@ -31,7 +31,7 @@ router.post('/', function (req, res, next) {
 	GpsDataSchema
 		.create(data)
 		.then(gpsData => {
-			res.send(200, gpsData)
+			res.send(200)
 			next()
 		})
 		.catch(err => {
