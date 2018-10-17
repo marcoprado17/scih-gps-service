@@ -1,14 +1,32 @@
 const mongoose = require('mongoose');
 const timestamps = require('mongoose-timestamp');
 
-const GpsDataScheme = new mongoose.Schema({
-    latitude: {
-        type: Number,
-        required: true,
+const GpsDataSchema = new mongoose.Schema({
+    data: {
+        encryptedGpsData: {
+            type: String,
+            required: true,
+        },
+        creationUnixTimestamp: {
+            type: Number,
+            required: true,
+        }
     },
-    longitude: {
+    from: {
+        type: String,
+        require: true
+    },
+    v: {
         type: Number,
-        required: true,
+        required: true
+    },
+    r: {
+        type: Buffer,
+        required: true
+    },
+    s: {
+        type: Buffer,
+        required: true
     },
     accountId: {
         type: String,
@@ -20,6 +38,6 @@ const GpsDataScheme = new mongoose.Schema({
     },
 }, { collection: 'gpsData' })
 
-GpsDataScheme.plugin(timestamps)
+GpsDataSchema.plugin(timestamps)
 
-module.exports = exports = mongoose.model('GpsData', GpsDataScheme)
+module.exports = exports = mongoose.model('GpsData', GpsDataSchema)

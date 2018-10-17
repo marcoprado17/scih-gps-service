@@ -1,5 +1,5 @@
 const router = new (require('restify-router')).Router();
-const GpsDataScheme = require('./model');
+const GpsDataSchema = require('./model');
 
 router.get('/', function (req, res, next) {
 	let limit = parseInt(req.query.limit, 10) || 10; // default limit to 10 docs
@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
 	delete query.skip
 	delete query.limit
 
-	GpsDataScheme
+	GpsDataSchema
 		.find(query)
 		.skip(skip)
 		.limit(limit)
@@ -28,7 +28,7 @@ router.post('/', function (req, res, next) {
 	let data = Object.assign({}, { accountId: req.params.accountId, contractId: req.params.contractId }, req.body) || {}
 	console.log(data);
 
-	GpsDataScheme
+	GpsDataSchema
 		.create(data)
 		.then(gpsData => {
 			res.send(200, gpsData)
