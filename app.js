@@ -30,6 +30,10 @@ server.use(restify.plugins.acceptParser(server.acceptable));
 server.use(restify.plugins.queryParser());
 server.use(restify.plugins.gzipResponse());
 
+router.get('/', (req, res, next) => {
+	res.send(200);
+});
+
 router.add('/api/accounts/:accountId/contracts/:contractId/gps-data', gpsDataRoutes);
 router.applyRoutes(server);
 
